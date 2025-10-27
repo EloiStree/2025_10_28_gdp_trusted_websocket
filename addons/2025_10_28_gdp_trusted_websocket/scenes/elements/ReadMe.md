@@ -1,0 +1,1 @@
+Equivalent of Prefab folder in Unity3D, drop here drag and drop element of godot you provide to the team.

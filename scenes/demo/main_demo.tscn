@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dulyebcjgqjaq"]
+[gd_scene load_steps=4 format=3 uid="uid://dulyebcjgqjaq"]
 
-[ext_resource type="Script" uid="uid://dt7edp1guva72" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/TrustedWebsocketClient.gd" id="1_8p8e7"]
 [ext_resource type="Script" uid="uid://c7byh1sylxfup" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/unstore/bytes_to_debug_labels.gd" id="2_8in1k"]
-[ext_resource type="Script" uid="uid://csj5putmrvmbw" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/WsReconnectTickTimer.gd" id="3_8in1k"]
+[ext_resource type="PackedScene" uid="uid://c30f821p41fxl" path="res://addons/2025_10_28_gdp_trusted_websocket/scenes/elements/trusted_web_socket_client.tscn" id="2_8p8e7"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ss3vc"]
 
@@ -76,22 +75,13 @@ offset_left = 5.0
 offset_top = -5.0
 text = "Test"
 
-[node name="TrustedWebSocketClient" type="Node" parent="."]
-script = ExtResource("1_8p8e7")
-metadata/_custom_type_script = "uid://dt7edp1guva72"
-
-[node name="DebugReceived" type="Node" parent="TrustedWebSocketClient" node_paths=PackedStringArray("debug_label_text", "debug_label_bytes_count", "debug_label_bytes_description", "debug_label_iid_index", "debug_label_iid_value", "debug_label_iid_date")]
+[node name="DebugReceived" type="Node" parent="." node_paths=PackedStringArray("debug_label_text", "debug_label_bytes_count", "debug_label_bytes_description", "debug_label_iid_index", "debug_label_iid_value", "debug_label_iid_date")]
 script = ExtResource("2_8in1k")
-debug_label_text = NodePath("../../ControlDebugWS/LabelText")
-debug_label_bytes_count = NodePath("../../ControlDebugWS/Control/HSplitContainer2/LabelBytesCount")
-debug_label_bytes_description = NodePath("../../ControlDebugWS/Control/HSplitContainer2/LabelBytesDescription")
-debug_label_iid_index = NodePath("../../ControlDebugWS/Control/HSplitContainer/LabelIndex")
-debug_label_iid_value = NodePath("../../ControlDebugWS/Control/HSplitContainer/LabelValue")
-debug_label_iid_date = NodePath("../../ControlDebugWS/Control/HSplitContainer/LabelDate")
+debug_label_text = NodePath("../ControlDebugWS/LabelText")
+debug_label_bytes_count = NodePath("../ControlDebugWS/Control/HSplitContainer2/LabelBytesCount")
+debug_label_bytes_description = NodePath("../ControlDebugWS/Control/HSplitContainer2/LabelBytesDescription")
+debug_label_iid_index = NodePath("../ControlDebugWS/Control/HSplitContainer/LabelIndex")
+debug_label_iid_value = NodePath("../ControlDebugWS/Control/HSplitContainer/LabelValue")
+debug_label_iid_date = NodePath("../ControlDebugWS/Control/HSplitContainer/LabelDate")
 
-[node name="Timer" type="Node" parent="TrustedWebSocketClient"]
-script = ExtResource("3_8in1k")
-
-[connection signal="bytes_received" from="TrustedWebSocketClient" to="TrustedWebSocketClient/DebugReceived" method="push_bytes"]
-[connection signal="text_received" from="TrustedWebSocketClient" to="TrustedWebSocketClient/DebugReceived" method="push_text"]
-[connection signal="tick" from="TrustedWebSocketClient/Timer" to="TrustedWebSocketClient" method="ensure_connected"]
+[node name="TrustedWebSocketClient" parent="." instance=ExtResource("2_8p8e7")]

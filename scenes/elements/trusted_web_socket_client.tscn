@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c30f821p41fxl"]
+
+[ext_resource type="Script" uid="uid://dt7edp1guva72" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/TrustedWebsocketClient.gd" id="1_ljec1"]
+[ext_resource type="Script" uid="uid://csj5putmrvmbw" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/WsReconnectTickTimer.gd" id="2_33qp3"]
+
+[node name="TrustedWebSocketClient" type="Node"]
+script = ExtResource("1_ljec1")
+metadata/_custom_type_script = "uid://dt7edp1guva72"
+
+[node name="Timer" type="Node" parent="."]
+script = ExtResource("2_33qp3")
+
+[connection signal="tick" from="Timer" to="." method="ensure_connected"]

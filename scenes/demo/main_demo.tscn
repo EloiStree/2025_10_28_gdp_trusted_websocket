@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=3 uid="uid://dulyebcjgqjaq"]
+
+[ext_resource type="Script" uid="uid://dt7edp1guva72" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/TrustedWebsocketClient.gd" id="1_8p8e7"]
+[ext_resource type="Script" uid="uid://c7byh1sylxfup" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/unstore/bytes_to_debug_labels.gd" id="2_8in1k"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ss3vc"]
+
+[node name="MainDemo" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.50117445, 0)
+mesh = SubResource("BoxMesh_ss3vc")
+
+[node name="TrustedWebSocketClient" type="Node" parent="."]
+script = ExtResource("1_8p8e7")
+metadata/_custom_type_script = "uid://dt7edp1guva72"
+
+[node name="DebugReceived" type="Node" parent="TrustedWebSocketClient" node_paths=PackedStringArray("debug_label_text", "debug_label_bytes_count", "debug_label_bytes_description", "debug_label_iid_index", "debug_label_iid_value", "debug_label_iid_date")]
+script = ExtResource("2_8in1k")
+debug_label_text = NodePath("../../Control/LabelText")
+debug_label_bytes_count = NodePath("../../Control/Control/HSplitContainer2/LabelBytesCount")
+debug_label_bytes_description = NodePath("../../Control/Control/HSplitContainer2/LabelBytesDescription")
+debug_label_iid_index = NodePath("../../Control/Control/HSplitContainer/LabelIndex")
+debug_label_iid_value = NodePath("../../Control/Control/HSplitContainer/LabelValue")
+debug_label_iid_date = NodePath("../../Control/Control/HSplitContainer/LabelDate")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Control" type="Control" parent="Control"]
+layout_mode = 1
+anchor_right = 28.832
+anchor_bottom = 8.548
+offset_right = 0.7199707
+offset_bottom = 6.0799866
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Control/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.29000002
+offset_right = -3.0
+offset_bottom = 3.0799942
+
+[node name="LabelIndex" type="Label" parent="Control/Control/HSplitContainer"]
+layout_mode = 2
+text = "Test"
+
+[node name="LabelValue" type="Label" parent="Control/Control/HSplitContainer"]
+layout_mode = 2
+text = "Test"
+
+[node name="LabelDate" type="Label" parent="Control/Control/HSplitContainer"]
+layout_mode = 2
+text = "Test"
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="Control/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.606
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = -1.8880005
+offset_right = -16.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelBytesCount" type="Label" parent="Control/Control/HSplitContainer2"]
+layout_mode = 2
+text = "Test"
+
+[node name="LabelBytesDescription" type="Label" parent="Control/Control/HSplitContainer2"]
+layout_mode = 2
+text = "Test"
+
+[node name="LabelText" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 8.1
+anchor_right = 28.900002
+anchor_bottom = 16.2
+offset_left = 5.0
+offset_top = -5.0
+text = "Test"
+
+[connection signal="bytes_received" from="TrustedWebSocketClient" to="TrustedWebSocketClient/DebugReceived" method="push_bytes"]
+[connection signal="text_received" from="TrustedWebSocketClient" to="TrustedWebSocketClient/DebugReceived" method="push_text"]

@@ -3,4 +3,6 @@ git submodule add https://github.com/EloiStree/2025_10_28_gdp_trusted_websocket.
 git submodule update --init --recursive
 ```
 
-# Wbesocket
+# Websocket
+
+Simple websocket client in Godot without security option.

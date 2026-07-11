@@ -90,30 +90,33 @@ func disconnect_from_server() -> void:
 func send_text(text: String) -> Error:
 	if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
 		return ERR_UNCONFIGURED
-
 	var err := _ws.send_text(text)
-
 	if err == OK:
 		sent_text.emit(text)
-
 	return err
 
 
 func send_byte(data: PackedByteArray) -> Error:
 	if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
 		return ERR_UNCONFIGURED
-
 	var err := _ws.send(data)
-
 	if err == OK:
 		sent_byte.emit(data)
-
 	return err
 
 
-func push_random_ssd1306() -> void:
+func push_random_ssd1306_as_byte() -> void:
 	var bytes := PackedByteArray()
 	bytes.resize(1024)
 	for i in 1024:
 		bytes[i] = randi() % 256
 	send_byte(bytes)
+	
+	
+func push_random_ssd1306_as_text() -> void:
+	var text := ""
+	for _i in range(128 * 64):
+		text += "1" if randi() % 2 == 0 else "0"
+	send_text(text)
+	
+	

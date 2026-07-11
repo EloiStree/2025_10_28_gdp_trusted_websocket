@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bin0sxy3l2kiu"]
+
+[ext_resource type="Script" uid="uid://bvvmjs3y035m4" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/tbiows_default_server.gd" id="1_8vdx5"]
+[ext_resource type="Script" uid="uid://b4gaoasdh6xru" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/tbiows_join_peer_id_as_one_player.gd" id="2_w5yhp"]
+
+[node name="TbioWsDefaultServer" type="Node" unique_id=705473434]
+script = ExtResource("1_8vdx5")
+metadata/_custom_type_script = "uid://bvvmjs3y035m4"
+
+[node name="TbioWsJoinPeersIdAsOnePeer" type="Node" parent="." unique_id=1821370330]
+script = ExtResource("2_w5yhp")
+metadata/_custom_type_script = "uid://b4gaoasdh6xru"
+
+[connection signal="on_received_from_client_byte" from="." to="TbioWsJoinPeersIdAsOnePeer" method="push_in_received_byte_with_peer_id"]
+[connection signal="on_received_from_client_text" from="." to="TbioWsJoinPeersIdAsOnePeer" method="push_in_received_text_with_peer_id"]

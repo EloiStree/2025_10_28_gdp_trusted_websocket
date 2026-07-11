@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://e1psl5t55wn8"]
+
+[ext_resource type="Script" uid="uid://d3hlkvw17w6i7" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/tbiows_default_client.gd" id="1_s4gwl"]
+
+[node name="TbioWsDefaultClient" type="Node" unique_id=1818182602]
+script = ExtResource("1_s4gwl")
+metadata/_custom_type_script = "uid://d3hlkvw17w6i7"
+
+[node name="Timer PushRandom" type="Timer" parent="." unique_id=1922165725]
+
+[connection signal="timeout" from="Timer PushRandom" to="." method="push_random_ssd1306_as_text"]

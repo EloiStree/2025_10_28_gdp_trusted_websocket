@@ -11,7 +11,7 @@ signal on_send_from_server_to_client_text(text:String)
 signal on_send_from_server_to_client_byte( data: PackedByteArray)
 
 # The port we will listen to.
-const PORT = 3616
+@export var _port = 3616
 
 # Our TCP Server instance.
 var _tcp_server = TCPServer.new()
@@ -24,9 +24,9 @@ var last_peer_id := 1
 
 func _ready():
 	# Start listening on the given port.
-	var err = _tcp_server.listen(PORT)
+	var err = _tcp_server.listen(_port)
 	if err == OK:
-		print("Server started on port %d." % PORT)
+		print("Server started on port %d." % _port)
 	else:
 		push_error("Unable to start server.")
 		set_process(false)
@@ -85,6 +85,18 @@ func broadcast_byte(data: PackedByteArray) -> void:
 			peer.send(data)
 	on_send_from_server_to_client_byte.emit(data)
 	
+
+func broadcast_ping_and_random():
+	broadcast_ping()
+	broadcast_random_integer()
+
+func broadcast_ping():
+	broadcast_text("ping")
+	
+func broadcast_random_integer():
+	var bytes := PackedByteArray()
+	bytes.append(randi() % 256)
+	broadcast_byte(bytes)
 
 
 func _on_timer_timeout() -> void:

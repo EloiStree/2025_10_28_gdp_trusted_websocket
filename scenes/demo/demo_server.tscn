@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://blrv73my73yur"]
+
+[ext_resource type="PackedScene" uid="uid://bin0sxy3l2kiu" path="res://addons/2025_10_28_gdp_trusted_websocket/scenes/prefab/prefab_tbio_ws_default_server.tscn" id="1_s62cg"]
+
+[node name="DemoServer" type="Control" unique_id=1186832917]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TbioWsDefaultServer" parent="." unique_id=705473434 instance=ExtResource("1_s62cg")]
+
+[node name="Timer" type="Timer" parent="TbioWsDefaultServer" unique_id=1130044599]
+wait_time = 5.0
+autostart = true
+
+[node name="TextEdit" type="TextEdit" parent="." unique_id=254370657]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.26000002
+anchor_bottom = 0.577
+offset_right = 0.47998047
+offset_bottom = 0.10397339
+
+[connection signal="on_received_text" from="TbioWsDefaultServer/TbioWsJoinPeersIdAsOnePeer" to="TextEdit" method="insert_text_at_caret"]
+[connection signal="timeout" from="TbioWsDefaultServer/Timer" to="TbioWsDefaultServer" method="broadcast_ping_and_random"]
+
+[editable path="TbioWsDefaultServer"]

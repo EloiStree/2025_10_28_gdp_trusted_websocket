@@ -12,7 +12,7 @@ signal on_send_from_server_to_client_byte( data: PackedByteArray)
 
 # The port we will listen to.
 @export var _port = 3616
-
+@export var _listen_interface :String ="0.0.0.0"
 # Our TCP Server instance.
 var _tcp_server = TCPServer.new()
 
@@ -24,7 +24,7 @@ var last_peer_id := 1
 
 func _ready():
 	# Start listening on the given port.
-	var err = _tcp_server.listen(_port)
+	var err = _tcp_server.listen(_port,_listen_interface)
 	if err == OK:
 		print("Server started on port %d." % _port)
 	else:

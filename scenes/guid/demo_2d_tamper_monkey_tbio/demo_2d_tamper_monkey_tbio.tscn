@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://d4fncxglgih3s"]
+
+[ext_resource type="Script" uid="uid://bvvmjs3y035m4" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/tbiows_default_server.gd" id="1_srduf"]
+[ext_resource type="Script" uid="uid://bgvudd1v2i1y3" path="res://addons/2026_06_29_gdp_text_byte_in_out_layer/script/tbio_abstract_node.gd" id="2_lwo5x"]
+[ext_resource type="Script" uid="uid://dpginewh02ule" path="res://addons/2025_10_28_gdp_trusted_websocket/scenes/guid/demo_2d_tamper_monkey_tbio/tbiows_ui_four_byte_to_integer.gd" id="2_osecy"]
+
+[node name="Demo2dTamperMonkeyTbio" type="Control" unique_id=2118434210]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TbioWsDefaultServer" type="Node" parent="." unique_id=1669622431]
+script = ExtResource("1_srduf")
+_port = 7072
+metadata/_custom_type_script = "uid://bvvmjs3y035m4"
+
+[node name="TBIoWsUIFourByteToInteger" type="Node" parent="TbioWsDefaultServer" unique_id=427420115]
+script = ExtResource("2_osecy")
+metadata/_custom_type_script = "uid://dpginewh02ule"
+
+[node name="TextByteInOutLayerAbstractNode" type="Node" parent="TbioWsDefaultServer" unique_id=1007667731]
+script = ExtResource("2_lwo5x")
+metadata/_custom_type_script = "uid://bgvudd1v2i1y3"
+
+[node name="Label" type="Label" parent="." unique_id=910382152]
+layout_mode = 0
+offset_right = 254.0
+offset_bottom = 130.0
+text = "0"
+
+[connection signal="on_received_from_client_byte" from="TbioWsDefaultServer" to="TbioWsDefaultServer/TBIoWsUIFourByteToInteger" method="push_in_byte_to_be_parsed_with_peer"]
+[connection signal="on_integer_found_as_string" from="TbioWsDefaultServer/TBIoWsUIFourByteToInteger" to="Label" method="set_text"]

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bvvmjs3y035m4" path="res://addons/2025_10_28_gdp_trusted_websocket/scripts/tbiows_default_server.gd" id="1_srduf"]
 [ext_resource type="Script" uid="uid://bgvudd1v2i1y3" path="res://addons/2026_06_29_gdp_text_byte_in_out_layer/script/tbio_abstract_node.gd" id="2_lwo5x"]
 [ext_resource type="Script" uid="uid://dpginewh02ule" path="res://addons/2025_10_28_gdp_trusted_websocket/scenes/guid/demo_2d_tamper_monkey_tbio/tbiows_ui_four_byte_to_integer.gd" id="2_osecy"]
+[ext_resource type="Script" uid="uid://dm1x28vamo2id" path="res://addons/2025_10_28_gdp_trusted_websocket/scenes/guid/demo_2d_tamper_monkey_tbio/tbiows_ui_peer_and_value_to_format_text.gd" id="4_inb54"]
 
 [node name="Demo2dTamperMonkeyTbio" type="Control" unique_id=2118434210]
 layout_mode = 3
@@ -27,5 +28,20 @@ offset_right = 254.0
 offset_bottom = 130.0
 text = "0"
 
+[node name="Label2" type="Label" parent="." unique_id=809895073]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 111.0
+offset_right = 381.0
+offset_bottom = 233.0
+text = "dsa"
+script = ExtResource("4_inb54")
+
+[node name="TbioWsUiPeerAndValueToFormatText" type="Node" parent="Label2" unique_id=1218871820 node_paths=PackedStringArray("_label_to_display")]
+script = ExtResource("4_inb54")
+_label_to_display = NodePath("..")
+metadata/_custom_type_script = "uid://dm1x28vamo2id"
+
 [connection signal="on_received_from_client_byte" from="TbioWsDefaultServer" to="TbioWsDefaultServer/TBIoWsUIFourByteToInteger" method="push_in_byte_to_be_parsed_with_peer"]
+[connection signal="on_received_from_client_text" from="TbioWsDefaultServer" to="Label2/TbioWsUiPeerAndValueToFormatText" method="push_in_peer_and_value_to_format_text"]
 [connection signal="on_integer_found_as_string" from="TbioWsDefaultServer/TBIoWsUIFourByteToInteger" to="Label" method="set_text"]

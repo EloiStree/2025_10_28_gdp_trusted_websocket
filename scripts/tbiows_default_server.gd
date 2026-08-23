@@ -21,8 +21,23 @@ var _peers: Dictionary[int, WebSocketPeer] = {}
 
 var last_peer_id := 1
 
+@export var _auto_start_server_at_ready: bool = true
 
 func _ready():
+	if _auto_start_server_at_ready:
+		start_server()
+
+func set_port_and_start_server(port: int) -> void:
+	_port = port
+	start_server()
+
+func set_ip_mask_interface(mask_interface: String="0.0.0.0") -> void:
+	_listen_interface = mask_interface
+
+func set_port(port: int) -> void:
+	_port = port
+
+func start_server() -> void:
 	# Start listening on the given port.
 	var err = _tcp_server.listen(_port,_listen_interface)
 	if err == OK:

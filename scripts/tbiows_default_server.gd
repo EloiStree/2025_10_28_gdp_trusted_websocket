@@ -6,6 +6,10 @@ signal on_client_connected(peer_id: int)
 signal on_client_disconnected(peer_id: int, code: int, reason: String)
 signal on_received_from_client_text(peer_id: int, message: String)
 signal on_received_from_client_byte(peer_id: int, data: PackedByteArray)
+signal on_received_from_client_text_with_ip(ipv4: String, message: String)
+signal on_received_from_client_byte_with_ip(ipv4: String, data: PackedByteArray)
+signal on_received_from_client_text_anonym( message: String)
+signal on_received_from_client_byte_anonym( data: PackedByteArray)
 
 signal on_send_from_server_to_client_text(text:String)
 signal on_send_from_server_to_client_byte( data: PackedByteArray)
@@ -27,6 +31,10 @@ func _ready():
 	if _auto_start_server_at_ready:
 		start_server()
 
+func set_ip_and_port_then_start_server(ip_mask:String,port:int):
+	self.set_ip_mask_interface(ip_mask)
+	self.set_port_and_start_server(port)
+
 func set_port_and_start_server(port: int) -> void:
 	_port = port
 	start_server()
@@ -46,14 +54,26 @@ func start_server() -> void:
 		push_error("Unable to start server.")
 		set_process(false)
 
+@export var _use_print_peer_connected:bool = true
+@export var _use_print_package_received_for_debug:bool=false
 
 func _process(_delta):
 	# Accept new connections
 	while _tcp_server.is_connection_available():
 		last_peer_id += 1
-		print("+ Peer %d connected." % last_peer_id)
+		var connection = _tcp_server.take_connection()
+		var peer_ip = connection.get_connected_host()
+		var peer_port = connection.get_connected_port()
+		
+		if _use_print_peer_connected:
+			print("+ Peer %d connected." % last_peer_id)
+			print("  - IP: %s" % peer_ip)
+			print ("  - Port: %d" % peer_port)
+			print ("  - Peer ID: %d" % last_peer_id)
+			print ("  - Total connected: %d" % (_peers.size() + 1))
+
 		var ws = WebSocketPeer.new()
-		ws.accept_stream(_tcp_server.take_connection())
+		ws.accept_stream(connection)
 		_peers[last_peer_id] = ws
 		on_client_connected.emit(last_peer_id)
 
@@ -69,11 +89,17 @@ func _process(_delta):
 				var packet = peer.get_packet()
 				if peer.was_string_packet():
 					var packet_text = packet.get_string_from_utf8()
-					print("< Got text data from peer %d: %s" % [peer_id, packet_text])
+					if _use_print_package_received_for_debug:
+						print("< Got text data from peer %d: %s" % [peer_id, packet_text])
 					on_received_from_client_text.emit(peer_id, packet_text)
+					on_received_from_client_text_anonym.emit(packet_text)
+					on_received_from_client_text_with_ip.emit(peer.get_connected_host(), packet_text)
 				else:
-					print("< Got binary data from peer %d: %d bytes" % [peer_id, packet.size()])
+					if _use_print_package_received_for_debug:
+						print("< Got binary data from peer %d: %d bytes" % [peer_id, packet.size()])
 					on_received_from_client_byte.emit(peer_id, packet)
+					on_received_from_client_byte_anonym.emit(packet)
+					on_received_from_client_byte_with_ip.emit(peer.get_connected_host(), packet)
 					
 		elif peer_state == WebSocketPeer.STATE_CLOSED:
 			# Remove the disconnected peer.
@@ -112,7 +138,3 @@ func broadcast_random_integer():
 	var bytes := PackedByteArray()
 	bytes.append(randi() % 256)
 	broadcast_byte(bytes)
-
-
-func _on_timer_timeout() -> void:
-	pass # Replace with function body.

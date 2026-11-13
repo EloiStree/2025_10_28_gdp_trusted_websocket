@@ -5,46 +5,47 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_ss3vc"]
 
-[node name="MainDemo" type="Node3D"]
+[node name="MainDemo" type="Node3D" unique_id=80439038]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1051404411]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.50117445, 0)
 mesh = SubResource("BoxMesh_ss3vc")
 
-[node name="ControlDebugWS" type="Control" parent="."]
+[node name="ControlDebugWS" type="Control" parent="." unique_id=1120068626]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Control" type="Control" parent="ControlDebugWS"]
+[node name="Control" type="Control" parent="ControlDebugWS" unique_id=1374649598]
 layout_mode = 1
 anchor_right = 28.832
 anchor_bottom = 8.548
 offset_right = 0.7199707
 offset_bottom = 6.0799866
 
-[node name="HSplitContainer" type="HSplitContainer" parent="ControlDebugWS/Control"]
+[node name="HSplitContainer" type="HSplitContainer" parent="ControlDebugWS/Control" unique_id=1036857692]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.29000002
 offset_right = -3.0
 offset_bottom = 3.0799942
+split_offsets = PackedInt32Array(0, 0)
 
-[node name="LabelIndex" type="Label" parent="ControlDebugWS/Control/HSplitContainer"]
+[node name="LabelIndex" type="Label" parent="ControlDebugWS/Control/HSplitContainer" unique_id=266387417]
 layout_mode = 2
 text = "Test"
 
-[node name="LabelValue" type="Label" parent="ControlDebugWS/Control/HSplitContainer"]
+[node name="LabelValue" type="Label" parent="ControlDebugWS/Control/HSplitContainer" unique_id=494535964]
 layout_mode = 2
 text = "Test"
 
-[node name="LabelDate" type="Label" parent="ControlDebugWS/Control/HSplitContainer"]
+[node name="LabelDate" type="Label" parent="ControlDebugWS/Control/HSplitContainer" unique_id=781439279]
 layout_mode = 2
 text = "Test"
 
-[node name="HSplitContainer2" type="HSplitContainer" parent="ControlDebugWS/Control"]
+[node name="HSplitContainer2" type="HSplitContainer" parent="ControlDebugWS/Control" unique_id=1593602958]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.606
@@ -57,15 +58,15 @@ offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelBytesCount" type="Label" parent="ControlDebugWS/Control/HSplitContainer2"]
+[node name="LabelBytesCount" type="Label" parent="ControlDebugWS/Control/HSplitContainer2" unique_id=473431063]
 layout_mode = 2
 text = "Test"
 
-[node name="LabelBytesDescription" type="Label" parent="ControlDebugWS/Control/HSplitContainer2"]
+[node name="LabelBytesDescription" type="Label" parent="ControlDebugWS/Control/HSplitContainer2" unique_id=1312452171]
 layout_mode = 2
 text = "Test"
 
-[node name="LabelText" type="Label" parent="ControlDebugWS"]
+[node name="LabelText" type="Label" parent="ControlDebugWS" unique_id=2062405964]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 8.1
@@ -75,7 +76,7 @@ offset_left = 5.0
 offset_top = -5.0
 text = "Test"
 
-[node name="DebugReceived" type="Node" parent="." node_paths=PackedStringArray("debug_label_text", "debug_label_bytes_count", "debug_label_bytes_description", "debug_label_iid_index", "debug_label_iid_value", "debug_label_iid_date")]
+[node name="DebugReceived" type="Node" parent="." unique_id=1976695878 node_paths=PackedStringArray("debug_label_text", "debug_label_bytes_count", "debug_label_bytes_description", "debug_label_iid_index", "debug_label_iid_value", "debug_label_iid_date")]
 script = ExtResource("2_8in1k")
 debug_label_text = NodePath("../ControlDebugWS/LabelText")
 debug_label_bytes_count = NodePath("../ControlDebugWS/Control/HSplitContainer2/LabelBytesCount")
@@ -84,4 +85,4 @@ debug_label_iid_index = NodePath("../ControlDebugWS/Control/HSplitContainer/Labe
 debug_label_iid_value = NodePath("../ControlDebugWS/Control/HSplitContainer/LabelValue")
 debug_label_iid_date = NodePath("../ControlDebugWS/Control/HSplitContainer/LabelDate")
 
-[node name="TrustedWebSocketClient" parent="." instance=ExtResource("2_8p8e7")]
+[node name="TrustedWebSocketClient" parent="." unique_id=1909739464 instance=ExtResource("2_8p8e7")]
